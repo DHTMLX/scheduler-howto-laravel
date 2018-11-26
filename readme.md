@@ -10,7 +10,7 @@ Implementing backend for dhtmlxScheduler using Laravel framework.
 - [Composer](https://getcomposer.org/)
 - MySQL
 
-###Setup
+### Setup
 
 1. Create database
 2. Update connection settings in **.env**
@@ -21,6 +21,6 @@ Implementing backend for dhtmlxScheduler using Laravel framework.
 
 - `php artisan serve`
 
-###Tutorial
+### Tutorial
 
-A complete tutorial here https://docs.dhtmlx.com/scheduler/
+A complete tutorial here https://docs.dhtmlx.com/scheduler/howtostart_php_laravel.html
