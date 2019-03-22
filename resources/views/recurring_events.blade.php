@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <head>
    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
- 
+
    <script src="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.js"></script>
    <script src="https://cdn.dhtmlx.com/scheduler/edge/ext/dhtmlxscheduler_recurring.js"></script>
    <link href="https://cdn.dhtmlx.com/scheduler/edge/dhtmlxscheduler.css" rel="stylesheet">
- 
+
    <style type="text/css">
        html, body{
            height:100%;
@@ -13,7 +13,7 @@
            margin:0px;
            overflow: hidden;
        }
- 
+
    </style>
 </head>
 <body>

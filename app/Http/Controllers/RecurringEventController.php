@@ -30,14 +30,13 @@ class RecurringEventController extends Controller
         $event->rec_type = $request->rec_type;
         $event->event_length = $request->event_length;
         $event->event_pid = $request->event_pid;
-
         $event->save();
 
         $status = "inserted";
         if($event->rec_type == "none"){
             $status = "deleted";
         }
-    
+
         return response()->json([
             "action"=> $status,
             "tid" => $event->id

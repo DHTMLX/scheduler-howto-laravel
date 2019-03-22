@@ -22,3 +22,4 @@ Route::get('/scheduler', function () {
 Route::get('/recurring_events', function () {
     return view('recurring_events');
 });
+
