@@ -15,7 +15,8 @@ Implementing backend for dhtmlxScheduler using Laravel framework.
 1. Create database
 2. Update connection settings in **.env**
 3. run `composer install`
-3. run migrations `php artisan migrate`
+4. run migrations `php artisan migrate`
+5. run command `php artisan key:generate`
 
 ### Run
 
