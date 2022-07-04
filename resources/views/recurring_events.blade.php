@@ -37,7 +37,7 @@
     scheduler.init("scheduler_here", new Date(2018, 11, 3), "week");
 
     scheduler.load("/api/recurringEvents", "json");//!
-    let dp = new dataProcessor("/api/recurringEvents");//!
+    let dp = scheduler.createDataProcessor("/api/recurringEvents");//!
     dp.init(scheduler);
     dp.setTransactionMode("REST");
 </script>

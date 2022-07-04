@@ -36,7 +36,7 @@
     scheduler.init("scheduler_here", new Date(2018, 11, 3), "week");
 
     scheduler.load("/api/events", "json");//!
-    let dp = new dataProcessor("/api/events");//!
+    let dp = scheduler.createDataProcessor("/api/events");//!
     dp.init(scheduler);
     dp.setTransactionMode("REST");
 </script>
