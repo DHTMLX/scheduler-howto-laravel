@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\RecurringEvent;
+use App\Models\RecurringEvent;
 
 class RecurringEventController extends Controller
 {
     public function index(Request $request){
         $events = new RecurringEvent();
-
+ 
         $from = $request->from;
         $to = $request->to;
-
+ 
         return response()->json([
             "data" => $events->
                 where("start_date", "<", $to)->
@@ -27,9 +27,13 @@ class RecurringEventController extends Controller
         $event->text = strip_tags($request->text);
         $event->start_date = $request->start_date;
         $event->end_date = $request->end_date;
-        $event->rec_type = $request->rec_type;
-        $event->event_length = $request->event_length;
-        $event->event_pid = $request->event_pid;
+
+        $event->duration = $request->duration;
+        $event->rrule = $request->rrule;
+        $event->recurring_event_id = $request->recurring_event_id;
+        $event->original_start = $request->original_start;
+        $event->deleted = $request->deleted;
+
         $event->save();
 
         $status = "inserted";
@@ -49,37 +53,44 @@ class RecurringEventController extends Controller
         $event->text = strip_tags($request->text);
         $event->start_date = $request->start_date;
         $event->end_date = $request->end_date;
-        $event->rec_type = $request->rec_type;
-        $event->event_length = $request->event_length;
-        $event->event_pid = $request->event_pid;
-        $event->save();
-        $this->deleteRelated($event);
-        return response()->json([
-            "action"=> "updated"
-        ]);
-    }
 
-    private function deleteRelated($event){
-        if($event->event_pid && $event->event_pid !== "none"){
-            RecurringEvent::where("event_pid", $event->id)->delete();
+        $event->duration = $request->duration;
+        $event->rrule = $request->rrule;
+        $event->recurring_event_id = $request->recurring_event_id;
+        $event->original_start = $request->original_start;
+        $event->deleted = $request->deleted;
+
+        $event->save();
+
+        // If rrule is set and recurring_event_id is null, delete modified occurrences
+        if ($event->rrule && $event->recurring_event_id === null) {
+            RecurringEvent::where('recurring_event_id', $id)->delete();
         }
+
+        return response()->json([
+            "action" => "updated"
+        ]);
     }
 
     public function destroy($id){
         $event = RecurringEvent::find($id);
 
         // delete the modified instance of the recurring series
-        if($event->event_pid){
-            $event->rec_type = "none";
-            $event->save();
-        }else{
-            // delete a regular instance
+        if ($event->recurring_event_id) {
+            // Deleting a modified occurrence from a recurring series
+            // Instead of deleting, update the record to mark deleted (soft delete)
+            RecurringEvent::where('id', $id)->update(['deleted' => 1]);
+        } else {
+            if ($event->rrule) {
+                // If deleting a recurring series, delete all modified occurrences
+                RecurringEvent::where('recurring_event_id', $id)->delete();
+            }
             $event->delete();
         }
-        $this->deleteRelated($event);
+
         return response()->json([
             "action"=> "deleted"
         ]);
-
     }
 }
+

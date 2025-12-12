@@ -1,17 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateRecurringEventsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('recurring_events', function (Blueprint $table) {
             $table->increments('id');
@@ -19,9 +17,11 @@ class CreateRecurringEventsTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
 
-            $table->string('rec_type')->nullable();
-            $table->bigInteger('event_length')->nullable();
-            $table->string('event_pid')->nullable();
+            $table->integer('duration')->nullable();
+            $table->string('rrule')->nullable();
+            $table->string('recurring_event_id')->nullable();
+            $table->string('original_start')->nullable();
+            $table->boolean('deleted')->nullable();
 
             $table->timestamps();
         });
@@ -29,11 +29,9 @@ class CreateRecurringEventsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('recurring_events');
     }
-}
+};

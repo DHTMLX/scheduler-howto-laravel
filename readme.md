@@ -6,7 +6,7 @@ Implementing backend for dhtmlxScheduler using Laravel framework.
 
 ### Requirements
 
-- PHP 5.6+
+- PHP 8+
 - [Composer](https://getcomposer.org/)
 - MySQL
 
